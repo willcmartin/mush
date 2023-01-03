@@ -10,7 +10,7 @@
  * @param input input string following "prompt > "
  * @return array of strings split by white space
  */
-int lexer(char *buffer, char **tokens){
+void lexer(char *buffer, char **tokens){
     const char delim[6] = " \n\t\a\r";
 
     char *token = strtok(buffer, delim);
@@ -26,6 +26,4 @@ int lexer(char *buffer, char **tokens){
         token = strtok(NULL, delim);
     }
     tokens[token_num] = NULL;
-
-    return token_num;
 }

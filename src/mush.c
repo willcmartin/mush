@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "lexer.h"
+#include "pprint.h"
 
 /**
  * Main function
@@ -18,14 +19,20 @@ int main(int argc, char *argv[]){
 
     while (1){
         // get input
-        printf("mush $ ");
+        pprint_prompt();
         getline(&buffer, &buffer_size, stdin); // vulnerable to DoS attack
 
         // lexer, fills tokens
         lexer(buffer, tokens);
 
+        // check for different commands
+        
+        // empty command
+        if (tokens[0] == NULL){
+            continue;
+        } 
         // exit command
-        if(!strcmp(tokens[0], "exit")) {
+        else if (!strcmp(tokens[0], "exit")) {
             break;
         }
         
