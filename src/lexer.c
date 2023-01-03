@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TOKEN_CNT 64
+#include "lexer.h"
 
 /**
  * Lexer, separates tokens
@@ -10,18 +10,22 @@
  * @param input input string following "prompt > "
  * @return array of strings split by white space
  */
-char **lexer(char *buffer){
+int lexer(char *buffer, char **tokens){
     const char delim[6] = " \n\t\a\r";
-    char **tokens = malloc(sizeof(char*) * TOKEN_CNT);
 
     char *token = strtok(buffer, delim);
     int token_num = 0;
     while(token != NULL) {
+        if (token_num >= MAX_TOKEN_CNT){
+            fprintf(stderr, "too many tokens\n");
+            exit(0);
+        }
+
         tokens[token_num] = strdup(token);
         token_num++;
         token = strtok(NULL, delim);
     }
     tokens[token_num] = NULL;
 
-    return tokens;
+    return token_num;
 }
