@@ -14,7 +14,7 @@ PROGS=mush
 # listed above. It expects that you have a <extra>.c file for each one 
 # specified. E.g., if you have a module named mylist defined in a file named 
 # "mylist.c", write "EXTRAS = mylist".
-EXTRAS=lexer pprint
+EXTRAS=lexer pprint builtin
 
 # In order to make your program run `make <program>` or to make all programs, 
 # run `make` or `make all` (the "all" target is set to depend on all programs).

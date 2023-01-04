@@ -4,6 +4,8 @@
 
 #include "lexer.h"
 #include "pprint.h"
+#import "builtin.h"
+
 
 /**
  * Main function
@@ -32,13 +34,22 @@ int main(int argc, char *argv[]){
             continue;
         } 
         // exit command
-        else if (!strcmp(tokens[0], "exit")) {
+        else if (!strcmp(tokens[0], "exit")){
             break;
+        }
+        // cd command
+        else if (!strcmp(tokens[0], "cd")){
+            cd(tokens);
+        }
+        // unknown command
+        else {
+            printf("mush: unknown command (%s)\n", tokens[0]);
         }
         
         // free tokens
         for (int i=0; i<MAX_TOKEN_CNT; i++){
             free(tokens[i]);
+            tokens[i] = NULL;
         }
     }
 

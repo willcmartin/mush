@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
-#define NAME_LEN 16
+#include "pprint.h"
+
+#define NAME_LEN 32
+#define PATH_LEN 64
 #define RED   "\x1B[31m"
 #define GRN   "\x1B[32m"
 #define YEL   "\x1B[33m"
@@ -18,17 +22,24 @@
 void pprint_prompt(){
     char username[NAME_LEN];
     char hostname[NAME_LEN];
+    char curr_path[PATH_LEN];
 
+    char *token;
+    size_t length;
+
+    // TODO: deal with errors
     getlogin_r(username, sizeof(username));
     gethostname(hostname, sizeof(hostname));
+    getcwd(curr_path, sizeof(curr_path));
 
-    // split hostname on period, my mac adds weird stuff sometimes
-    for (int i=0; i<NAME_LEN; i++){
-        if (hostname[i] == '.') {
-            hostname[i] = '\0';
-            break;
-        }
-    }
+    // split hostname on ., my mac adds weird stuff sometimes
+    token = strchr(hostname, '.');
+    *token = '\0';
 
-    printf(CYN "MUSH " RESET "%s" CYN "@" RESET "%s " CYN ">> " RESET, username, hostname);
+    // split curr_path on /
+    token = strrchr(curr_path, '/');
+    length = strlen(token);
+    memcpy(curr_path, token+1, length);
+
+    printf(CYN "MUSH " RESET "%s" CYN "@" RESET "%s" CYN " :: " YEL "%s" CYN " >> " RESET, username, hostname, curr_path);
 }
