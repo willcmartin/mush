@@ -23,11 +23,6 @@ int main(int argc, char *argv[]){
     // TODO: could probably avoid the malloc completely unless want an expectable array of strings
     char **tokens = malloc(sizeof(char*) * MAX_TOKEN_CNT);
 
-    // path array
-    int path_len = 1;
-    char *path[MAX_PATH_LEN];
-    path[0] = strdup("/bin/");
-
     int unknown = 0;
 
     while (1){
@@ -54,7 +49,7 @@ int main(int argc, char *argv[]){
         }
         // execute command
         else {
-            exec(path, path_len, tokens, &unknown);
+            exec(tokens, &unknown);
         }
 
         // unknown command
@@ -75,9 +70,6 @@ int main(int argc, char *argv[]){
         free(tokens[i]);
     }
     free(tokens);
-    for (int i=0; i<path_len; i++){
-        free(path[i]);
-    }
 
     return(0);
 }
