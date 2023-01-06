@@ -4,7 +4,10 @@
 
 #include "lexer.h"
 #include "pprint.h"
-#import "builtin.h"
+#include "builtin.h"
+#include "exec.h"
+
+#define MAX_PATH_LEN 10
 
 
 /**
@@ -17,7 +20,15 @@ int main(int argc, char *argv[]){
     char *buffer = NULL;
 
     // token array, should probably initialize to NULL allocate in lexer
+    // TODO: could probably avoid the malloc completely unless want an expectable array of strings
     char **tokens = malloc(sizeof(char*) * MAX_TOKEN_CNT);
+
+    // path array
+    int path_len = 1;
+    char *path[MAX_PATH_LEN];
+    path[0] = strdup("/bin/");
+
+    int unknown = 0;
 
     while (1){
         // get input
@@ -41,8 +52,13 @@ int main(int argc, char *argv[]){
         else if (!strcmp(tokens[0], "cd")){
             cd(tokens);
         }
-        // unknown command
+        // execute command
         else {
+            exec(path, path_len, tokens, &unknown);
+        }
+
+        // unknown command
+        if (unknown){
             printf("mush: unknown command (%s)\n", tokens[0]);
         }
         
@@ -59,6 +75,9 @@ int main(int argc, char *argv[]){
         free(tokens[i]);
     }
     free(tokens);
+    for (int i=0; i<path_len; i++){
+        free(path[i]);
+    }
 
     return(0);
 }
