@@ -1,3 +1,9 @@
 Mush
 
 It's a shell
+
+todo:
+- redirection
+- if, while, conditionals, etc
+- sequential and parallel commands
+- batch files

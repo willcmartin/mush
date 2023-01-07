@@ -4,19 +4,28 @@
 
 #include "lexer.h"
 
-/**
- * Lexer, separates tokens
+struct token {
+    char *value;
+}
+
+/*
+ * The lexer separates a buffer string into tokens
  * 
- * @param input input string following "prompt > "
- * @return array of strings split by white space
+ * Takes buffer struct as input
+ * Returns next token struct following pointer in buffer
+ * Returns null if EOL
+ *
+ * TODO:
+ * - how to deal with multiple EOL character (&& and batch)
  */
-void lexer(char *buffer, char **tokens){
+void lexer(char *buffer, char **tokens)
+{
     const char delim[6] = " \n\t\a\r";
 
     char *token = strtok(buffer, delim);
     int token_num = 0;
     while(token != NULL) {
-        if (token_num >= MAX_TOKEN_CNT){
+        if (token_num >= MAX_TOKEN_CNT) {
             fprintf(stderr, "too many tokens\n");
             exit(0);
         }

@@ -14,7 +14,8 @@
  * Main function
  * Includes infinite loop to get user input, quits on "exit" command
  */
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[])
+{
     // input buffer, initialize to NULL so getline() allocates
     size_t buffer_size = 0;
     char *buffer = NULL;
@@ -25,7 +26,7 @@ int main(int argc, char *argv[]){
 
     int unknown = 0;
 
-    while (1){
+    while (1) {
         // get input
         pprint_prompt();
         getline(&buffer, &buffer_size, stdin); // vulnerable to DoS attack
