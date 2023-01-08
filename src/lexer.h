@@ -3,6 +3,16 @@
 
 #define MAX_TOKEN_CNT 64
 
-void lexer(char *buffer, char **tokens);
+enum token_type {
+    TOKEN_UNKOWN,         // exec name, exec flags
+};
+
+struct token {
+    enum token_type type;
+    char *text;
+    int len;
+};
+
+struct token *lexer(struct buffer *buf);
 
 #endif
