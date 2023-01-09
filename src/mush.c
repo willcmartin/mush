@@ -7,6 +7,7 @@
 #include "pprint.h"
 #include "builtin.h"
 #include "exec.h"
+#include "parser.h"
 
 #define MAX_PATH_LEN 10
 
@@ -29,7 +30,9 @@ int main(int argc, char *argv[])
         getline(&buf->buf_curr, &buf->len, stdin); // vulnerable to DoS attack
 
         // create ast using parser, the parser gets tokens from the lexer
-        
+        struct node *root = malloc(sizeof(struct node));
+        memset(root, 0, sizeof(*root));
+        parse(root, buf);
 
         // lexer produces tokens
         // struct token *tok = lexer(buf);
@@ -39,6 +42,7 @@ int main(int argc, char *argv[])
     }
 
     free(buf);
+    // TODO free buf_curr
 
     return(0);
 }

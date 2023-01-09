@@ -37,8 +37,6 @@ static int begins_with_whitespace(char *buf_text)
  */
 struct token *lexer(struct buffer *buf)
 {
-    printf("%s\n", buf->buf_curr);
-
     // allocate token 
     struct token *tok = malloc(sizeof(struct token));
     if (!tok) { 
