@@ -34,53 +34,19 @@ int main(int argc, char *argv[])
     while (1) {
         // get input
         pprint_prompt();
-        getline(&buf->buf_curr, &buf->len, stdin); // vulnerable to DoS attack
-
-        // printf("%s\n", buf->buf_curr);
-        
+        getline(&buf->buf_curr, &buf->len, stdin); // vulnerable to DoS attack        
 
         // lexer produces tokens
-        struct token *t = lexer(buf);
+        printf("hello\n");
+        struct token *tok = lexer(buf);
 
-        printf("%s\n", t->text);
+        printf("%d\n", tok->type);
 
-        // check for different commands
-        
-        // // empty command
-        // if (tokens[0] == NULL){
-        //     continue;
-        // } 
-        // // exit command
-        // else if (!strcmp(tokens[0], "exit")){
-        //     break;
-        // }
-        // // cd command
-        // else if (!strcmp(tokens[0], "cd")){
-        //     cd(tokens);
-        // }
-        // // execute command
-        // else {
-        //     exec(tokens, &unknown);
-        // }
-
-        // // unknown command
-        // if (unknown){
-        //     printf("mush: unknown command (%s)\n", tokens[0]);
-        // }
-        
-        // // free tokens
-        // for (int i=0; i<MAX_TOKEN_CNT; i++){
-        //     free(tokens[i]);
-        //     tokens[i] = NULL;
-        // }
+        // clear buffer
+        memset(buf, 0, sizeof(*buf));
     }
 
-    // free everything
-    // free(buffer);
-    // for (int i=0; i<MAX_TOKEN_CNT; i++){
-    //     free(tokens[i]);
-    // }
-    // free(tokens);
+    free(buf);
 
     return(0);
 }
