@@ -1,8 +1,6 @@
 #ifndef LEXER_H
 #define LEXER_H
 
-#define MAX_TOKEN_CNT 64
-
 enum token_type {
     TOKEN_UNKOWN,         // exec name, exec flags
     TOKEN_EMPTY,          // whitespace

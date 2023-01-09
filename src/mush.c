@@ -21,26 +21,18 @@ int main(int argc, char *argv[])
     struct buffer *buf = malloc(sizeof(struct buffer));
     memset(buf, 0, sizeof(*buf));
 
-    // size_t buffer_size = 0;
-    // char *buffer_raw = NULL;
-    
-
-    // token array, should probably initialize to NULL allocate in lexer
-    // TODO: could probably avoid the malloc completely unless want an expectable array of strings
-    // char **tokens = malloc(sizeof(char*) * MAX_TOKEN_CNT);
-
     int unknown = 0;
 
     while (1) {
         // get input
         pprint_prompt();
-        getline(&buf->buf_curr, &buf->len, stdin); // vulnerable to DoS attack        
+        getline(&buf->buf_curr, &buf->len, stdin); // vulnerable to DoS attack
+
+        // create ast using parser, the parser gets tokens from the lexer
+        
 
         // lexer produces tokens
-        printf("hello\n");
-        struct token *tok = lexer(buf);
-
-        printf("%d\n", tok->type);
+        // struct token *tok = lexer(buf);
 
         // clear buffer
         memset(buf, 0, sizeof(*buf));
