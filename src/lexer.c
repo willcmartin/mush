@@ -6,8 +6,8 @@
 #include "lexer.h"
 
 static char *keywords[] = {};
-static char whitespace[] = {'\0', ' ', '\t'};
-static char eol[] = {'\n'};
+static char whitespace[] = {'\n', ' ', '\t'};
+static char eol[] = {'\0'};
 
 static int keywords_cnt = sizeof(keywords) / sizeof(char *);
 static int whitespace_cnt = sizeof(whitespace);
@@ -44,12 +44,18 @@ struct token *lexer(struct buffer *buf)
     }
     memset(tok, 0, sizeof(*tok));
 
+    // advance to fist none whitespace
+    while (begins_with_whitespace(buf->buf_curr + tok->len)) {
+        buf->buf_curr++;
+    }
+
     // get token length and text
     tok->len = 0;
     while (!begins_with_whitespace(buf->buf_curr + tok->len)) {
         tok->len++;
     }
     tok->text = strndup(buf->buf_curr, tok->len); // TODO: free
+
     if (!tok->text){
         return NULL;
     }
@@ -58,12 +64,6 @@ struct token *lexer(struct buffer *buf)
     for (int i=0 ; i<keywords_cnt; i++) {
         if (!strcmp(tok->text, keywords[i])) {
             ; // TODO
-        }
-    }
-    for (int i=0; i<whitespace_cnt; i++) {
-        if (tok->text[0] == whitespace[i]) {
-            tok->type = TOKEN_EMPTY;
-            buf->buf_curr++; // doesn't advance otherwise, should be more elegant 
         }
     }
     for (int i=0; i<eol_cnt; i++) {

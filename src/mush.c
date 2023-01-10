@@ -8,6 +8,7 @@
 #include "builtin.h"
 #include "exec.h"
 #include "parser.h"
+#include "debug.h"
 
 #define MAX_PATH_LEN 10
 
@@ -33,6 +34,8 @@ int main(int argc, char *argv[])
         struct node *root = malloc(sizeof(struct node));
         memset(root, 0, sizeof(*root));
         parse(root, buf);
+
+        print_ast(root);
 
         // lexer produces tokens
         // struct token *tok = lexer(buf);

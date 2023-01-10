@@ -1,5 +1,5 @@
 PROGS=mush
-EXTRAS=lexer pprint builtin exec
+EXTRAS=lexer pprint builtin exec parser debug
 
 SRC_DIR=src
 BLD_DIR=build

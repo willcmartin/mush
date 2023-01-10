@@ -8,7 +8,7 @@ enum node_type {
 
 union node_val {
     int vint;
-    char *vstring;
+    char *vstr;
 };
 
 struct node {
